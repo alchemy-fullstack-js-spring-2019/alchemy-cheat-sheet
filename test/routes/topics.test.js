@@ -23,7 +23,6 @@ describe('topics routes', () => {
     await getTopics();
     const topics = await request(app)
       .get('/api/v1/topics');
-    
     expect(topics.body).toHaveLength(10);
   });
 
@@ -36,6 +35,22 @@ describe('topics routes', () => {
     expect(topic.body).toEqual({
       title: expect.any(String),
       description: expect.any(String),
+      _id: expect.any(String)
+    });
+  });
+
+  it('can update a topic description by id', async() => {
+    const testTopic = await getTopic();
+    const id = testTopic._id;
+    const updatedTopic = await request(app)
+      .patch(`/api/v1/topics/${id}`)
+      .send({
+        description: 'better description'
+      });
+      
+    expect(updatedTopic.body).toEqual({
+      title: expect.any(String),
+      description: 'better description',
       _id: expect.any(String)
     });
   });
