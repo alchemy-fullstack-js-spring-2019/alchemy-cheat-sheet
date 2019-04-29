@@ -1,4 +1,3 @@
-require('../data-helpers');
 const request = require('supertest');
 const app = require('../../lib/app');
 const { getTopics, getTopic } = require('../data-helpers');
