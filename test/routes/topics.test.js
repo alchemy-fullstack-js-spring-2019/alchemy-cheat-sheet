@@ -54,4 +54,17 @@ describe('topics routes', () => {
       _id: expect.any(String)
     });
   });
+
+  // have to check for admin
+  // have to check for notes
+  it('can delete a topic without any notes by id', async() => {
+    const testTopic = await getTopic();
+    const id = testTopic._id;
+    const deletedTopic = await request(app)
+      .delete(`/api/v1/topics/${id}`);
+
+    expect(deletedTopic.body).toEqual({
+      _id: expect.any(String)
+    });
+  });
 });
