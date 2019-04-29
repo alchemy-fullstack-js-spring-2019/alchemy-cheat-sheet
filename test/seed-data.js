@@ -8,5 +8,5 @@ module.exports = ({ topicCount = 10 } = {}) => {
     description: chance.word({ length: 5 })
   }));
 
-  Topic.create(topics); 
+  return Topic.create(topics); 
 };
