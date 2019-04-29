@@ -15,4 +15,11 @@ describe('User model', () => {
       _id: expect.any(mongoose.Types.ObjectId)
     });
   });
+
+  it('has required username and role', () => {
+    const user = new User({});
+    const errors = user.validateSync().errors;
+    expect(errors.username.message).toEqual('Path `username` is required.');
+    expect(errors.role.message).toEqual('Path `role` is required.');
+  });
 });
