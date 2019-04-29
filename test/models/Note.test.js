@@ -18,6 +18,7 @@ describe('Note model', () => {
       _id: expect.any(mongoose.Types.ObjectId)
     });
   });
+  
   it('requires title, content, user, topics', () => {
     const note = new Note({});
 
