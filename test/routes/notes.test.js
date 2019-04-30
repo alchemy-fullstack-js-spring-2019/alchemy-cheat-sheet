@@ -2,7 +2,6 @@ const request = require('supertest');
 const app = require('../../lib/app');
 const { getUser, getTopic } = require('../data-helpers');
 
-
 describe('notes routes', ()=>{
   it('can create a note', async() => {
     const user = await getUser();

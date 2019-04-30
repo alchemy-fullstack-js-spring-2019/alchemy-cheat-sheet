@@ -10,6 +10,7 @@ describe('topics routes', () => {
         title: 'MongoDB',
         description: 'Notes on MongoDB'
       });
+  
     expect(topic.body).toEqual({
       title: 'MongoDB',
       description: 'Notes on MongoDB',
@@ -22,6 +23,7 @@ describe('topics routes', () => {
     await getTopics();
     const topics = await request(app)
       .get('/api/v1/topics');
+  
     expect(topics.body).toHaveLength(10);
   });
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Note = require('../../lib/models/Note');
 
-//timestams can only be tested when routing through mongo
+//timestamps can only be tested when routing through mongo
 describe('Note model', () => {
   it('has a name, content, ref to user, and a topic', () => {
     const note = new Note({
@@ -10,6 +10,7 @@ describe('Note model', () => {
       user: new mongoose.Types.ObjectId(),
       topic: new mongoose.Types.ObjectId()
     });
+    
     expect(note.toJSON()).toEqual({
       title: 'CRUD',
       content: 'crud method stuff',
