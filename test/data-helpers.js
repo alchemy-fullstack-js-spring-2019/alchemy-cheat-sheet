@@ -5,6 +5,7 @@ const seedData  = require('./seed-data');
 // const request = require('supertest');
 // const app = require('../lib/app');
 const Topic = require('../lib/models/Topic'); 
+const User = require('../lib/models/User'); 
 // const agent = request.agent(app);
 
 beforeAll(async() => {
@@ -33,6 +34,7 @@ const createGetters = Model => ({
 });
 
 module.exports = {
-  ...createGetters(Topic)
+  ...createGetters(Topic),
+  ...createGetters(User)
   // getAgent: () => agent
 };
