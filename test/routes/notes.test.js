@@ -57,4 +57,29 @@ describe('notes routes', ()=>{
       }
     });
   });
+  
+  it('can update title and content', async() => {
+    const testNote = await getNote();
+    const id = testNote._id;
+    const note = await request(app)
+      .patch(`/api/v1/notes/${id}`)
+      .send({
+        title: 'better title',
+        content: 'some better content'
+      });
+    
+    expect(note.body).toEqual({
+      title: 'better title',
+      content: 'some better content',
+      user: expect.any(String),
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
+      _id: expect.any(String),
+      topic: {
+        _id: expect.any(String),
+        title: expect.any(String),
+        description: expect.any(String)
+      }
+    });
+  });
 });
