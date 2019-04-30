@@ -57,7 +57,7 @@ describe('notes routes', ()=>{
       }
     });
   });
-  
+
   it('can update title and content', async() => {
     const testNote = await getNote();
     const id = testNote._id;
@@ -80,6 +80,17 @@ describe('notes routes', ()=>{
         title: expect.any(String),
         description: expect.any(String)
       }
+    });
+  });
+
+  it('can delete a note', async() => {
+    const testNote = await getNote();
+    const id = testNote._id;
+    const note = await request(app)
+      .delete(`/api/v1/notes/${id}`);
+
+    expect(note.body).toEqual({
+      _id: expect.any(String)
     });
   });
 });
