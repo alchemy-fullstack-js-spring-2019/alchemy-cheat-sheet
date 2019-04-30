@@ -4,19 +4,10 @@ const app = require('../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../lib/utils/connect');
 const User = require('../../lib/models/User');
+const { getUser } = require('../data-helpers');
 
 describe('auth routes', () => {
-  beforeAll(async() => {
-    await connect();
-  });
-
-  beforeEach(async() => {
-    await mongoose.connection.dropDatabase();
-  });
-
-  afterAll(async() => {
-    await mongoose.connection.close();
-  });
+  
 
   it('can sign up a user', async() => {
     const user = await request(app)
@@ -26,6 +17,7 @@ describe('auth routes', () => {
         password: '123',
         role: 'contributor' 
       });
+  
     expect(user.body).toEqual({
       user: {
         username: 'testname',
@@ -33,6 +25,22 @@ describe('auth routes', () => {
         _id: expect.any(String)
       },
       token: expect.any(String)
+    });
+  });
+
+  it('can sign in a user', async() => {
+    const testUser = await getUser();
+    const user = await request(app)
+      .post('/api/v1/auth/signin')
+      .send({
+        username: testUser.username,
+        password: '123'
+      });
+
+    expect(user.body).toEqual({
+      username: testUser.username,
+      role: 'contributor',
+      _id: expect.any(String)
     });
   });
 });

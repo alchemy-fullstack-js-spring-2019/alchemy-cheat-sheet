@@ -6,7 +6,7 @@ const Note = require('../lib/models/Note');
 module.exports = async({ userCount = 5, topicCount = 10, noteCount = 30 } = {}) => {
   const users = [...Array(userCount)].map(() => ({
     username: chance.name(),
-    password: chance.word({ length: 1 }),
+    password: '123',
     role: 'contributor'
   }));
   const createdUsers = await User.create(users);
