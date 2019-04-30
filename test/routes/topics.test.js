@@ -19,7 +19,7 @@ describe('topics routes', () => {
   });
 
   it('can find all topics', async() => {
-    await getTopics();
+    const { testTopics } = await getTopics();
     const topics = await request(app)
       .get('/api/v1/topics');
     expect(topics.body).toHaveLength(10);
