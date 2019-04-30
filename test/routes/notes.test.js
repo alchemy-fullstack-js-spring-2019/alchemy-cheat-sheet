@@ -52,9 +52,16 @@ describe('notes routes', ()=>{
     });
   });
 
-  it('can update title and content', async() => {
-    const testNote = await getNote();
-    const id = testNote._id;
+  it('can update title and content if owner of note', async() => {
+    const testTopic = await getTopic();
+    const testNote = await getAgent()
+      .post('/api/v1/notes')
+      .send({
+        title: 'test note',
+        content: 'add content',
+        topic: testTopic._id
+      });
+    const id = testNote.body._id;
     const note = await getAgent()
       .patch(`/api/v1/notes/${id}`)
       .send({
