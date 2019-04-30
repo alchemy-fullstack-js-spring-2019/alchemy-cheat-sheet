@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const connect = require('../../lib/utils/connect');
 const User = require('../../lib/models/User');
 
-
 describe('auth routes', () => {
   beforeAll(async() => {
     await connect();
@@ -18,7 +17,7 @@ describe('auth routes', () => {
   afterAll(async() => {
     await mongoose.connection.close();
   });
-  
+
   it('can sign up a user', async() => {
     const user = await request(app)
       .post('/api/v1/auth/signup')
@@ -29,10 +28,11 @@ describe('auth routes', () => {
       });
     expect(user.body).toEqual({
       user: {
-        username: 'testnuuser',
+        username: 'testname',
         role: 'contributor',
         _id: expect.any(String)
-      }
+      },
+      token: expect.any(String)
     });
   });
 });
