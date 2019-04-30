@@ -1,19 +1,14 @@
-const request = require('supertest');
-const app = require('../../lib/app');
-const { getUser, getTopic, getNotes, getNote } = require('../data-helpers');
+const { getTopic, getNote, getAgent } = require('../data-helpers');
 
 describe('notes routes', ()=>{
   it('can create a note', async() => {
-    const user = await getUser();
     const topic = await getTopic();
-    const userId = user._id;
     const topicId = topic._id;
-    const note = await request(app)
+    const note = await getAgent()
       .post('/api/v1/notes')
       .send({
         title:'my first note',
         content: 'this has content',
-        user: userId,
         topic: topicId
       });
   
@@ -30,8 +25,7 @@ describe('notes routes', ()=>{
   });
 
   it('can get all notes', async() => {
-    await getNotes();
-    const notes = await request(app)
+    const notes = await getAgent()
       .get('/api/v1/notes');
     
     expect(notes.body).toHaveLength(30);
@@ -40,7 +34,7 @@ describe('notes routes', ()=>{
   it('can get a note by ID', async() => {
     const testNote = await getNote();
     const id = testNote._id;
-    const note = await request(app)
+    const note = await getAgent()
       .get(`/api/v1/notes/${id}`);
 
     expect(note.body).toEqual({
@@ -61,7 +55,7 @@ describe('notes routes', ()=>{
   it('can update title and content', async() => {
     const testNote = await getNote();
     const id = testNote._id;
-    const note = await request(app)
+    const note = await getAgent()
       .patch(`/api/v1/notes/${id}`)
       .send({
         title: 'better title',
@@ -86,7 +80,7 @@ describe('notes routes', ()=>{
   it('can delete a note', async() => {
     const testNote = await getNote();
     const id = testNote._id;
-    const note = await request(app)
+    const note = await getAgent()
       .delete(`/api/v1/notes/${id}`);
 
     expect(note.body).toEqual({

@@ -9,6 +9,7 @@ module.exports = async({ userCount = 5, topicCount = 10, noteCount = 30 } = {}) 
     password: '123',
     role: 'contributor'
   }));
+
   const createdUsers = await User.create(users);
   
   const topics = [...Array(topicCount)].map(() => ({

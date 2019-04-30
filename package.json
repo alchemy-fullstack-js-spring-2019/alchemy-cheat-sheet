@@ -35,6 +35,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "agent": "^0.2.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^7.0.0",

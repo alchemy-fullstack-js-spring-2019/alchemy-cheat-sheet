@@ -2,12 +2,13 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const connect = require('../lib/utils/connect');
 const seedData  = require('./seed-data');
-// const request = require('supertest');
-// const app = require('../lib/app');
+const request = require('supertest');
 const Topic = require('../lib/models/Topic'); 
 const User = require('../lib/models/User'); 
 const Note = require('../lib/models/Note'); 
-// const agent = request.agent(app);
+const app = require('../lib/app');
+
+const agent = request.agent(app);
 
 beforeAll(async() => {
   await connect();
@@ -15,13 +16,20 @@ beforeAll(async() => {
 
 beforeEach(async() => {
   await mongoose.connection.dropDatabase();
-//   return agent
-//     .post('/api/v1/auth/signup')
-//     .send({ email:'email', password:'123' });
 });
 
 beforeEach(async() => {
   await seedData();
+});
+
+beforeEach(() => {
+  return agent
+    .post('/api/v1/auth/signup')
+    .send({
+      username: 'test',
+      password: '123',
+      role: 'contributor'
+    });
 });
 
 afterAll(async() => {
@@ -37,6 +45,6 @@ const createGetters = Model => ({
 module.exports = {
   ...createGetters(Topic),
   ...createGetters(User),
-  ...createGetters(Note)
-  // getAgent: () => agent
+  ...createGetters(Note),
+  getAgent: () => agent
 };
