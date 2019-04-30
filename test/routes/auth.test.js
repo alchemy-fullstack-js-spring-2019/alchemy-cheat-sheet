@@ -1,14 +1,9 @@
 require('dotenv').config();
 const request = require('supertest');
 const app = require('../../lib/app');
-const mongoose = require('mongoose');
-const connect = require('../../lib/utils/connect');
-const User = require('../../lib/models/User');
 const { getUser } = require('../data-helpers');
 
 describe('auth routes', () => {
-  
-
   it('can sign up a user', async() => {
     const user = await request(app)
       .post('/api/v1/auth/signup')
