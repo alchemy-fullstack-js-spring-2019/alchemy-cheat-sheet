@@ -84,12 +84,18 @@ describe('notes routes', ()=>{
     });
   });
 
-  it('can delete a note', async() => {
-    const testNote = await getNote();
-    const id = testNote._id;
+  it('can delete a note that belongs to the user', async() => {
+    const testTopic = await getTopic();
+    const testNote = await getAgent()
+      .post('/api/v1/notes')
+      .send({
+        title: 'test note',
+        content: 'add content',
+        topic: testTopic._id
+      });
+    const id = testNote.body._id;
     const note = await getAgent()
       .delete(`/api/v1/notes/${id}`);
-
     expect(note.body).toEqual({
       _id: expect.any(String)
     });
