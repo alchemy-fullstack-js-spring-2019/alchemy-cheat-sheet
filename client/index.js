@@ -1,4 +1,4 @@
 require('dotenv').config();
-const topics = require('./handlers/home-page');
-const test = topics();
-console.log(test);
+const homePageHandler = require('./handlers/home-page');
+
+homePageHandler();

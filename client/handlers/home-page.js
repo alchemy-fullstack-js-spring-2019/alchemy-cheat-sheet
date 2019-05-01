@@ -1,27 +1,40 @@
 const inquirer = require('inquirer');
 const { get } = require('../commons/request');
-const request = require('superagent');
 
-//module.exports = async() => { await get('/topics'); };
-
-let notes = [];
-const test = async()=>  await get('/topics')
-  .then(result=>{console.log(result.body);
-    
-    notes = result.body;
+module.exports = async() =>  {
+  const topics = await get('/topics');
+  const topicsList = topics.body.map(topic => {
+    return { name: topic.title, value: topic._id };
   });
-test();
-// let test2;
-// async()=>{
-//   test2 = await get('/topics');
-// };
 
-try {
-  // console.log('test2', test2);
-  // console.log('tryuign to run test');
-  console.log(notes);
-  
-} catch(error){
-  console.log(error);
-}
+  const chooseTopic = {
+    type: 'list',
+    name: 'Topic',
+    choices: topicsList
+  };
 
+  inquirer.prompt([
+    chooseTopic
+  ])
+    .then(async(chosenTopic) => {
+      const notes = await get(`/topics/notes/${chosenTopic.Topic}`);
+      const notesList = notes.body.map(note => {
+        return { name: note.title, value: note._id };
+      });
+
+      const chooseNote = {
+        type: 'list',
+        name: 'Note',
+        choices: notesList
+      };
+
+      inquirer.prompt([
+        chooseNote
+      ])
+        .then(async(chosenNote) => {
+          const note = await get(`/notes/${chosenNote.Note}`);
+          console.log('Content:', note.body.content);
+          console.log('Last Updated:', note.body.updatedAt);
+        });
+    });
+};
