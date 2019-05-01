@@ -17,6 +17,17 @@ describe('topics routes', () => {
     });
   });
 
+  it('can get a note by topic ID', async() => {
+    const topic = await getTopic();
+    const notes = await getAgent()
+      .get(`/api/v1/topics/notes/${topic._id}`);
+
+    expect(notes.body[0]).toEqual({
+      _id: expect.any(String),
+      title: expect.any(String)
+    });
+  });
+
   it('can find all topics', async() => {
     await getTopics();
     const topics = await getAgent()
