@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Note = require('../../lib/models/Note');
 
-//timestamps can only be tested when routing through mongo
 describe('Note model', () => {
   it('has a name, content, ref to user, and a topic', () => {
     const note = new Note({

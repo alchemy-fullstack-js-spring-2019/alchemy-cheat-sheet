@@ -14,6 +14,7 @@ describe('Topic model', () => {
       _id: expect.any(mongoose.Types.ObjectId)
     });
   });
+  
   it('requires a title', () => {
     const topic = new Topic({});
 
