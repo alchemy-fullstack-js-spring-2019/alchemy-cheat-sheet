@@ -54,9 +54,6 @@ describe('topics routes', () => {
     });
   });
 
-  // have to check for admin
-  // have to check for notes
-  // needs aggregation
   it('cannot delete a topic with notes', async() => {
     const testTopic = await getTopic();
     const id = testTopic._id;
