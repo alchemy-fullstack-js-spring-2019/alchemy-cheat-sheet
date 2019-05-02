@@ -17,5 +17,5 @@ module.exports = {
   post: (path, body) => makeRequest(path, 'post', body),
   get: path => makeRequest(path, 'get'),
   patch: (path, body) => makeRequest(path, 'patch', body),
-  delete: path => makeRequest(path, 'delete')
+  del: path => makeRequest(path, 'delete')
 };

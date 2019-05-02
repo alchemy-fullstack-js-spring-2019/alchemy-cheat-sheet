@@ -3,6 +3,7 @@ const { get } = require('../commons/request');
 const topicPostHandler = require('./topic-post');
 const notePostHandler = require('../handlers/note-post');
 const notePatchHandler = require('../handlers/note-patch');
+const noteDeleteHandler = require('../handlers/note-delete');
 
 const contributorHandler = async() =>  {
   const topics = await get('/topics');
@@ -26,7 +27,7 @@ const contributorHandler = async() =>  {
     const notesList = notes.body.map(note => {
       return { name: note.title, value: note._id };
     });
-    const notesListWithCreate = [{ name: 'CREATE NOTE', value: chosenTopic.Topic }, ...notesList];
+    const notesListWithCreate = [{ name: 'CREATE NOTE', value: chosenTopic.Topic }, { name: 'BACK TO TOPICS', value: 'topics' }, ...notesList];
 
     const chooseNote = {
       type: 'list',
@@ -38,8 +39,13 @@ const contributorHandler = async() =>  {
       chooseNote
     ]);
 
+
     if(chosenNote.Note === chosenTopic.Topic) {
       return notePostHandler(chosenTopic.Topic);
+    }
+
+    if(chosenNote.Note === 'topics') {
+      return require('./contributor')();
     }
 
     const note = await get(`/notes/${chosenNote.Note}`);
@@ -47,9 +53,10 @@ const contributorHandler = async() =>  {
     console.log('Last Updated:', note.body.updatedAt);
   
     const exitOptions = [
-      { name: 'Exit to console', value: 'exit' },
-      { name: 'Back to topics', value: 'rerun' },
-      { name: 'Update Note', value: chosenNote.Note }
+      { name: 'Exit to Console', value: 'exit' },
+      { name: 'Back to Topics', value: 'rerun' },
+      { name: 'Update Note', value: chosenNote.Note },
+      { name: 'Delete Note', value: `${chosenNote.Note}delete` }
     ];
   
     const chooseExit = {
@@ -61,13 +68,14 @@ const contributorHandler = async() =>  {
     const chosenExit = await inquirer.prompt([
       chooseExit
     ]);
-    
+    console.log(chosenExit);
     if(chosenExit.Choice === 'exit') {
       console.log('Thanks for using Alchemy Cheat Sheets!');
     } else if(chosenExit.Choice === chosenNote.Note) {
       await notePatchHandler(chosenNote.Note);
-    }
-    else {
+    } else if(chosenExit.Choice === `${chosenNote.Note}delete`) {
+      await noteDeleteHandler(chosenNote.Note);
+    } else {
       return contributorHandler();
     }
   } else {
