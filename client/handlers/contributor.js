@@ -2,6 +2,8 @@ const inquirer = require('inquirer');
 const { get } = require('../commons/request');
 const topicPostHandler = require('./topic-post');
 const notePostHandler = require('../handlers/note-post');
+const notePatchHandler = require('../handlers/note-patch');
+
 
 const contributorHandler = async() =>  {
   const topics = await get('/topics');
@@ -55,7 +57,8 @@ const contributorHandler = async() =>  {
   
     const exitOptions = [
       { name: 'Exit to console', value: 'exit' },
-      { name: 'Back to topics', value: 'rerun' }
+      { name: 'Back to topics', value: 'rerun' },
+      { name: 'Update Note', value: chosenNote.Note }
     ];
   
     const chooseExit = {
@@ -69,7 +72,10 @@ const contributorHandler = async() =>  {
     ]);
     if(chosenExit.Choice === 'exit') {
       console.log('Thanks for using Alchemy Cheat Sheets!');
-    } else {
+    } else if(chosenExit.Choice === chosenNote.Note) {
+      await notePatchHandler(chosenNote.Note);
+    }
+    else {
       return contributorHandler();
     }
   } else {
