@@ -1,5 +1,6 @@
 require('dotenv').config();
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const contributorHandler = require('./contributor');
 const { post } = require('../commons/request');
 
@@ -7,21 +8,21 @@ const authHandler = async() => {
   const signupOrSignin = {
     type: 'list',
     name: 'authType',
-    message: 'Sign up or sign in?',
+    message: chalk.magenta('Sign up or sign in?'),
     choices: [
-      { name: 'signup', value: '/auth/signup' },
-      { name: 'signin', value: '/auth/signin' }
+      { name: 'Sign up', value: '/auth/signup' },
+      { name: 'Sign in', value: '/auth/signin' }
     ]
   };
   
   const username = {
     type: 'input',
-    name: 'username'
+    name: 'Username'
   };
   
   const password = {
     type: 'password',
-    name: 'password'
+    name: 'Password'
   };
 
   const userAuthParams = await inquirer.prompt([
@@ -31,7 +32,7 @@ const authHandler = async() => {
   ]);
 
   try {
-    const user = await post(userAuthParams.authType, { username: userAuthParams.username, password: userAuthParams.password });
+    const user = await post(userAuthParams.authType, { username: userAuthParams.Username, password: userAuthParams.Password });
     if(user){
       return contributorHandler();
     }

@@ -1,5 +1,19 @@
 const inquirer = require('inquirer');
 const { get } = require('../commons/request');
+const chalk = require('chalk');
+const figlet = require('figlet');
+
+const goodbyeMessage = () => {
+  console.log(
+    chalk.cyan(
+      figlet.textSync('Thanks for using Alchemy Cheat Sheets!', {
+        font: 'mini',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+      })
+    )
+  );
+};
 
 const viewerHandler = async() =>  {
   const topics = await get('/topics');
@@ -31,8 +45,8 @@ const viewerHandler = async() =>  {
     chooseNote
   ]);
   const note = await get(`/notes/${chosenNote.Note}`);
-  console.log('Content:', note.body.content);
-  console.log('Last Updated:', note.body.updatedAt);
+  console.log(chalk.white.bold('Content:', note.body.content));
+  console.log(chalk.gray.bold('Last Updated:', note.body.updatedAt));
 
   const exitOptions = [
     { name: 'Exit to console', value: 'exit' },
@@ -49,7 +63,7 @@ const viewerHandler = async() =>  {
     chooseExit
   ]);
   if(chosenExit.Choice === 'exit') {
-    console.log('Thanks for using Alchemy Cheat Sheets!');
+    goodbyeMessage();
   } else {
     return viewerHandler();
   }

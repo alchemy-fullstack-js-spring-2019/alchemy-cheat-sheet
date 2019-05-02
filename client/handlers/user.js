@@ -6,7 +6,7 @@ const chalk = require('chalk');
 
 const colorFontCreator = () => {
   console.log(
-    chalk.cyan(
+    chalk.hex('#ff5db1')(
       figlet.textSync('Welcome!', {
         font: 'doom',
         horizontalLayout: 'default',
@@ -18,11 +18,10 @@ const colorFontCreator = () => {
 
 colorFontCreator();
 
-console.log('Select a Role: ');
-
 const userHandler = async() => {
   const chooseUserType = {
     type: 'list',
+    message: chalk.magenta('Please select a role:'),
     name: 'User',
     choices: [
       { name: 'Viewer', value: 'viewer' },
@@ -33,6 +32,7 @@ const userHandler = async() => {
   const chosenUserType = await inquirer.prompt([
     chooseUserType
   ]);
+
   if(chosenUserType.User === 'viewer') {
     return viewerHandler();
   } else {

@@ -18,12 +18,13 @@ const goodbyeMessage = () => {
     )
   );
 };
+
 const contributorHandler = async() =>  {
   const topics = await get('/topics');
   const topicsList = topics.body.map(topic => {
     return { name: topic.title, value: topic._id };
   });
-  const topicsListWithCreate = [{ name: 'CREATE TOPIC', value: '121299' }, ...topicsList];
+  const topicsListWithCreate = [{ name: chalk.white.bgBlue.bold('CREATE TOPIC'), value: '121299' }, ...topicsList];
 
   const chooseTopic = {
     type: 'list',
@@ -40,7 +41,7 @@ const contributorHandler = async() =>  {
     const notesList = notes.body.map(note => {
       return { name: note.title, value: note._id };
     });
-    const notesListWithCreate = [{ name: 'CREATE NOTE', value: chosenTopic.Topic }, { name: 'BACK TO TOPICS', value: 'topics' }, ...notesList];
+    const notesListWithCreate = [{ name: chalk.white.bgBlue.bold('CREATE NOTE'), value: chosenTopic.Topic }, { name: chalk.white.bgGreen.bold('BACK TO TOPICS'), value: 'topics' }, ...notesList];
 
 
     const chooseNote = {
@@ -63,8 +64,8 @@ const contributorHandler = async() =>  {
     }
 
     const note = await get(`/notes/${chosenNote.Note}`);
-    console.log('Content:', note.body.content);
-    console.log('Last Updated:', note.body.updatedAt);
+    console.log(chalk.white.bold('Content:', note.body.content));
+    console.log(chalk.gray.bold('Last Updated:', note.body.updatedAt));
   
     const exitOptions = [
       { name: 'Exit to Console', value: 'exit' },
