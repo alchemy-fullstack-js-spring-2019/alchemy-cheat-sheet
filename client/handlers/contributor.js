@@ -1,4 +1,3 @@
-
 const inquirer = require('inquirer');
 const { get } = require('../commons/request');
 
@@ -18,13 +17,13 @@ const contributorHandler = async() =>  {
   const chosenTopic = await inquirer.prompt([
     chooseTopic
   ]);
-  const notes = await get(`/topics/notes/${chosenTopic.Topic}`);
-  const notesList = notes.body.map(note => {
-    return { name: note.title, value: note._id };
-  });
 
-  
   if(chosenTopic.Topic != '121299'){
+    const notes = await get(`/topics/notes/${chosenTopic.Topic}`);
+    const notesList = notes.body.map(note => {
+      return { name: note.title, value: note._id };
+    });
+
     const chooseNote = {
       type: 'list',
       name: 'Note',
