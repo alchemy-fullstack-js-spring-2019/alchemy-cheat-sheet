@@ -25,4 +25,3 @@ const userHandler = async() => {
 };
 
 module.exports = userHandler;
- 
