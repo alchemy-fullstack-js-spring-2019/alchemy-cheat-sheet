@@ -4,7 +4,20 @@ const topicPostHandler = require('./topic-post');
 const notePostHandler = require('../handlers/note-post');
 const notePatchHandler = require('../handlers/note-patch');
 const noteDeleteHandler = require('../handlers/note-delete');
+const chalk = require('chalk');
+const figlet = require('figlet');
 
+const goodbyeMessage = () => {
+  console.log(
+    chalk.cyan(
+      figlet.textSync('Thanks for using Alchemy Cheat Sheets!', {
+        font: 'mini',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+      })
+    )
+  );
+};
 const contributorHandler = async() =>  {
   const topics = await get('/topics');
   const topicsList = topics.body.map(topic => {
@@ -28,6 +41,7 @@ const contributorHandler = async() =>  {
       return { name: note.title, value: note._id };
     });
     const notesListWithCreate = [{ name: 'CREATE NOTE', value: chosenTopic.Topic }, { name: 'BACK TO TOPICS', value: 'topics' }, ...notesList];
+
 
     const chooseNote = {
       type: 'list',
@@ -68,9 +82,10 @@ const contributorHandler = async() =>  {
     const chosenExit = await inquirer.prompt([
       chooseExit
     ]);
-    console.log(chosenExit);
+    
     if(chosenExit.Choice === 'exit') {
-      console.log('Thanks for using Alchemy Cheat Sheets!');
+      goodbyeMessage();
+      //insert chalk stuff
     } else if(chosenExit.Choice === chosenNote.Note) {
       await notePatchHandler(chosenNote.Note);
     } else if(chosenExit.Choice === `${chosenNote.Note}delete`) {
