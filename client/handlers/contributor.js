@@ -4,13 +4,12 @@ const topicPostHandler = require('./topic-post');
 const notePostHandler = require('../handlers/note-post');
 const notePatchHandler = require('../handlers/note-patch');
 
-
 const contributorHandler = async() =>  {
   const topics = await get('/topics');
   const topicsList = topics.body.map(topic => {
     return { name: topic.title, value: topic._id };
   });
-  const topicsListWithCreate = [{ name:'CREATE TOPIC', value:'121299' }, ...topicsList];
+  const topicsListWithCreate = [{ name: 'CREATE TOPIC', value: '121299' }, ...topicsList];
 
   const chooseTopic = {
     type: 'list',
@@ -22,20 +21,12 @@ const contributorHandler = async() =>  {
     chooseTopic
   ]);
   
-  if(chosenTopic.Topic != '121299'){
+  if(chosenTopic.Topic != '121299') {
     const notes = await get(`/topics/notes/${chosenTopic.Topic}`);
     const notesList = notes.body.map(note => {
       return { name: note.title, value: note._id };
     });
-    const notesListWithCreate = [{ name:'CREATE-NOTE', value:chosenTopic.Topic }, ...notesList];
-    //we went into a topic that allready exists
-    ///we need the id of the topic that fetch was done with.
-    //this id = chosenTopic.topic.
-    //in here we want a prompt that eiterh lets you 1)click on a note, exit
-    //to index, OR create a note
-    //if you hit create a note, the value of create note needs to be chosen 
-    //topic.topic
-    //const notesListWithCreate = [{ name:'CREATE NOTE', value:chosenTopic.topic }, ...notesList];
+    const notesListWithCreate = [{ name: 'CREATE NOTE', value: chosenTopic.Topic }, ...notesList];
 
     const chooseNote = {
       type: 'list',
@@ -47,7 +38,7 @@ const contributorHandler = async() =>  {
       chooseNote
     ]);
 
-    if(chosenNote.Note === chosenTopic.Topic){
+    if(chosenNote.Note === chosenTopic.Topic) {
       return notePostHandler(chosenTopic.Topic);
     }
 
@@ -70,6 +61,7 @@ const contributorHandler = async() =>  {
     const chosenExit = await inquirer.prompt([
       chooseExit
     ]);
+    
     if(chosenExit.Choice === 'exit') {
       console.log('Thanks for using Alchemy Cheat Sheets!');
     } else if(chosenExit.Choice === chosenNote.Note) {

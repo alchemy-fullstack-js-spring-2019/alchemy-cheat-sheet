@@ -18,10 +18,9 @@ const notePostHandler = async(topicId) => {
     content
   ]);
 
-  try
-  {
-    await post('/notes', { topic:topicId, title:newNote.Title, content:newNote.Content });
-  } catch(error){
+  try {
+    await post('/notes', { topic: topicId, title: newNote.Title, content: newNote.Content });
+  } catch(error) {
     console.log(error);
   }
 

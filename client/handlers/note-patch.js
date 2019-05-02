@@ -16,10 +16,10 @@ const notePatchHandler = async(noteId) => {
     noteTitle,
     content
   ]);
-  try
-  {
+
+  try {
     await patch(`/notes/${noteId}`, { title: updatedNote.Title, content: updatedNote.Content });
-  } catch(error){
+  } catch(error) {
     console.log(error);
   }
 
@@ -27,5 +27,3 @@ const notePatchHandler = async(noteId) => {
 };
 
 module.exports = notePatchHandler;
-
-
