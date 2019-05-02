@@ -16,10 +16,9 @@ describe('User model', () => {
     });
   });
 
-  it('has required username and role', () => {
+  it('has required username', () => {
     const user = new User({});
     const errors = user.validateSync().errors;
     expect(errors.username.message).toEqual('Path `username` is required.');
-    expect(errors.role.message).toEqual('Path `role` is required.');
   });
 });
