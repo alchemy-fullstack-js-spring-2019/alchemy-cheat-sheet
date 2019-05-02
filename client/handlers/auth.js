@@ -1,7 +1,7 @@
 require('dotenv').config();
-const contributorHandler = require('./contributor');
-const request = require('superagent');
 const inquirer = require('inquirer');
+const contributorHandler = require('./contributor');
+const { post } = require('../commons/request');
 
 const authHandler = async() => {
   const signupOrSignin = {
@@ -31,9 +31,7 @@ const authHandler = async() => {
   ]);
 
   try {
-    const user = await request
-      .post(`${process.env.BASE_URL}${userAuthParams.authType}`)
-      .send({ username: userAuthParams.username, password:userAuthParams.password });
+    const user = await post(userAuthParams.authType, { username: userAuthParams.username, password: userAuthParams.password });
     if(user){
       return contributorHandler();
     }

@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const { get } = require('../commons/request');
+const topicPostHander = require('./topic-post');
 
 const contributorHandler = async() =>  {
   const topics = await get('/topics');
@@ -57,7 +58,7 @@ const contributorHandler = async() =>  {
       return contributorHandler();
     }
   } else {
-    console.log('we need to call post handler');
+    return topicPostHander();
   }
 };
 
