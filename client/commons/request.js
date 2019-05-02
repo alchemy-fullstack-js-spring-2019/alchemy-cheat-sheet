@@ -2,9 +2,10 @@ require('dotenv').config();
 const request = require('superagent');
 
 const BASE_URL = process.env.BASE_URL;
+const agent = request.agent();
 
 const makeRequest = (path, method, body) => {
-  const req = request[method](`${BASE_URL}${path}`);
+  const req = agent[method](`${BASE_URL}${path}`);
   if(body) {
     req.send(body);
   }
