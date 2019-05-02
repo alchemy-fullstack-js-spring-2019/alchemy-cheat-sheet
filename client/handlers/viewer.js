@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const { get } = require('../commons/request');
 
-const homePageHandler = async() =>  {
+const viewerHandler = async() =>  {
   const topics = await get('/topics');
   const topicsList = topics.body.map(topic => {
     return { name: topic.title, value: topic._id };
@@ -51,8 +51,8 @@ const homePageHandler = async() =>  {
   if(chosenExit.Choice === 'exit') {
     console.log('Thanks for using Alchemy Cheat Sheets!');
   } else {
-    return homePageHandler();
+    return viewerHandler();
   }
 };
 
-module.exports = homePageHandler;
+module.exports = viewerHandler;

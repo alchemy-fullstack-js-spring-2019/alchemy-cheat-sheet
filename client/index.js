@@ -1,4 +1,4 @@
 require('dotenv').config();
-const homePageHandler = require('./handlers/home-page');
-
-homePageHandler();
+// const viewerHandler = require('./handlers/viewer');
+const userHandler = require('./handlers/user');
+userHandler();
