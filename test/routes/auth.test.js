@@ -34,7 +34,6 @@ describe('auth routes', () => {
 
     expect(user.body).toEqual({
       username: testUser.username,
-      role: 'contributor',
       _id: expect.any(String)
     });
   });
