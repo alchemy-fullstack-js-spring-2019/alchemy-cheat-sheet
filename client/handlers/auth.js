@@ -40,8 +40,6 @@ const authHandler = async() => {
   } catch(error){
     console.log(error);
   }
-  
 };
-
 
 module.exports = authHandler;
