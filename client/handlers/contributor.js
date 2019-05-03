@@ -24,7 +24,7 @@ const contributorHandler = async() =>  {
   const topicsList = topics.body.map(topic => {
     return { name: topic.title, value: topic._id };
   });
-  const topicsListWithCreate = [{ name: chalk.white.bgBlue.bold('CREATE TOPIC'), value: '121299' }, ...topicsList];
+  const topicsListWithCreate = [{ name: chalk.white.bgBlue.bold('CREATE TOPIC'), value: '121299' }, { name: chalk.white.bgGreen.bold('EXIT TO CONSOLE'), value: 'exit' }, ...topicsList];
 
   const chooseTopic = {
     type: 'list',
@@ -35,6 +35,10 @@ const contributorHandler = async() =>  {
   const chosenTopic = await inquirer.prompt([
     chooseTopic
   ]);
+
+  if(chosenTopic.Topic === 'exit') {
+    return console.log('See you later!');
+  }
   
   if(chosenTopic.Topic != '121299') {
     const notes = await get(`/topics/notes/${chosenTopic.Topic}`);
@@ -42,7 +46,6 @@ const contributorHandler = async() =>  {
       return { name: note.title, value: note._id };
     });
     const notesListWithCreate = [{ name: chalk.white.bgBlue.bold('CREATE NOTE'), value: chosenTopic.Topic }, { name: chalk.white.bgGreen.bold('BACK TO TOPICS'), value: 'topics' }, ...notesList];
-
 
     const chooseNote = {
       type: 'list',

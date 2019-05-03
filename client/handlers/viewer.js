@@ -20,16 +20,22 @@ const viewerHandler = async() =>  {
   const topicsList = topics.body.map(topic => {
     return { name: topic.title, value: topic._id };
   });
+  const topicsListWithExit = [{ name: chalk.white.bgBlue.bold('EXIT TO CONSOLE'), value: 'exit' }, ...topicsList];
 
   const chooseTopic = {
     type: 'list',
     name: 'Topic',
-    choices: topicsList
+    choices: topicsListWithExit
   };
 
   const chosenTopic = await inquirer.prompt([
     chooseTopic
   ]);
+
+  if(chosenTopic.Topic === 'exit') {
+    return console.log('See you later!');
+  }
+
   const notes = await get(`/topics/notes/${chosenTopic.Topic}`);
   const notesList = notes.body.map(note => {
     return { name: note.title, value: note._id };
