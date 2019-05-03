@@ -54,7 +54,6 @@ const contributorHandler = async() =>  {
       chooseNote
     ]);
 
-
     if(chosenNote.Note === chosenTopic.Topic) {
       return notePostHandler(chosenTopic.Topic);
     }

@@ -34,16 +34,22 @@ const viewerHandler = async() =>  {
   const notesList = notes.body.map(note => {
     return { name: note.title, value: note._id };
   });
+  const notesListWithExit = [{ name: chalk.white.bgGreen.bold('BACK TO TOPICS'), value: 'topics' }, ...notesList];
 
   const chooseNote = {
     type: 'list',
     name: 'Note',
-    choices: notesList,
+    choices: notesListWithExit,
   };
 
   const chosenNote = await inquirer.prompt([
     chooseNote
   ]);
+
+  if(chosenNote.Note === 'topics') {
+    return require('./viewer')();
+  }
+
   const note = await get(`/notes/${chosenNote.Note}`);
   console.log(chalk.white.bold('Content:', note.body.content));
   console.log(chalk.gray.bold('Last Updated:', note.body.updatedAt));
