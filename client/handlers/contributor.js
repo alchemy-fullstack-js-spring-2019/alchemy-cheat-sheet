@@ -86,7 +86,6 @@ const contributorHandler = async() =>  {
     
     if(chosenExit.Choice === 'exit') {
       goodbyeMessage();
-      //insert chalk stuff
     } else if(chosenExit.Choice === chosenNote.Note) {
       await notePatchHandler(chosenNote.Note);
     } else if(chosenExit.Choice === `${chosenNote.Note}delete`) {

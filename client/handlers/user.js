@@ -4,11 +4,11 @@ const authHandler = require('./auth');
 const figlet = require('figlet');
 const chalk = require('chalk');
 
-const colorFontCreator = () => {
+const welcomeMessage = () => {
   console.log(
-    chalk.hex('#ff5db1')(
-      figlet.textSync('Welcome!', {
-        font: 'doom',
+    chalk.hex('#8fc400')(
+      figlet.textSync('Welcome to', {
+        font: 'ogre',
         horizontalLayout: 'default',
         verticalLayout: 'default'
       })
@@ -16,7 +16,20 @@ const colorFontCreator = () => {
   );
 };
 
-colorFontCreator();
+const subtitleMessage = () => {
+  console.log(
+    chalk.hex('#ff5db1')(
+      figlet.textSync('Alchemy Cheat Sheets', {
+        font: 'tombstone',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+      })
+    )
+  );
+};
+
+welcomeMessage();
+subtitleMessage();
 
 const userHandler = async() => {
   const chooseUserType = {
