@@ -15,6 +15,18 @@ const goodbyeMessage = () => {
   );
 };
 
+const seeYouLaterMessage = () => {
+  console.log(
+    chalk.magenta(
+      figlet.textSync('See you later!', {
+        font: 'stacey',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+      })
+    )
+  );
+};
+
 const viewerHandler = async() =>  {
   const topics = await get('/topics');
   const topicsList = topics.body.map(topic => {
@@ -33,7 +45,7 @@ const viewerHandler = async() =>  {
   ]);
 
   if(chosenTopic.Topic === 'exit') {
-    return console.log('See you later!');
+    return seeYouLaterMessage();
   }
 
   const notes = await get(`/topics/notes/${chosenTopic.Topic}`);

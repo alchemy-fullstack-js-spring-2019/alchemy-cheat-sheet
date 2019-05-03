@@ -1,8 +1,8 @@
 const inquirer = require('inquirer');
-const viewerHandler = require('./viewer');
-const authHandler = require('./auth');
 const figlet = require('figlet');
 const chalk = require('chalk');
+const authHandler = require('./auth');
+const viewerHandler = require('./viewer');
 
 const welcomeMessage = () => {
   console.log(

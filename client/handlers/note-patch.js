@@ -1,5 +1,6 @@
 require('dotenv').config();
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const { patch } = require('../commons/request');
 
 const notePatchHandler = async(noteId) => {
@@ -20,7 +21,7 @@ const notePatchHandler = async(noteId) => {
   try {
     await patch(`/notes/${noteId}`, { title: updatedNote.Title, content: updatedNote.Content });
   } catch(error) {
-    console.log(error);
+    console.log(chalk.bgRed(error.response.body.error));
   }
 
   return require('./contributor')();

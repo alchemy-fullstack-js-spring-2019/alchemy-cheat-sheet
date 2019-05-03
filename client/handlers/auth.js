@@ -37,7 +37,8 @@ const authHandler = async() => {
       return contributorHandler();
     }
   } catch(error){
-    console.log(error);
+    console.log(chalk.bgRed(error.response.body.error));
+    return require('./auth')();
   }
 };
 

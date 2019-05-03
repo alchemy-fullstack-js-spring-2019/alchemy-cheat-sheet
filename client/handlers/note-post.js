@@ -1,5 +1,6 @@
 require('dotenv').config();
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const { post } = require('../commons/request');
 
 const notePostHandler = async(topicId) => {
@@ -21,7 +22,7 @@ const notePostHandler = async(topicId) => {
   try {
     await post('/notes', { topic: topicId, title: newNote.Title, content: newNote.Content });
   } catch(error) {
-    console.log(error);
+    console.log(chalk.bgRed(error.response.body.error));
   }
 
   return require('./contributor')();

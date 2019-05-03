@@ -1,17 +1,29 @@
 const inquirer = require('inquirer');
-const { get } = require('../commons/request');
+const chalk = require('chalk');
+const figlet = require('figlet');
 const topicPostHandler = require('./topic-post');
 const notePostHandler = require('../handlers/note-post');
 const notePatchHandler = require('../handlers/note-patch');
 const noteDeleteHandler = require('../handlers/note-delete');
-const chalk = require('chalk');
-const figlet = require('figlet');
+const { get } = require('../commons/request');
 
 const goodbyeMessage = () => {
   console.log(
     chalk.cyan(
       figlet.textSync('Thanks for using Alchemy Cheat Sheets!', {
         font: 'mini',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+      })
+    )
+  );
+};
+
+const seeYouLaterMessage = () => {
+  console.log(
+    chalk.magenta(
+      figlet.textSync('See you later!', {
+        font: 'stacey',
         horizontalLayout: 'default',
         verticalLayout: 'default'
       })
@@ -37,7 +49,7 @@ const contributorHandler = async() =>  {
   ]);
 
   if(chosenTopic.Topic === 'exit') {
-    return console.log('See you later!');
+    return seeYouLaterMessage();
   }
   
   if(chosenTopic.Topic != '121299') {
